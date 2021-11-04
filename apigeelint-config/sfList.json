@@ -1,0 +1,18 @@
+{
+	"rest_template": [
+		"sf-ax-response-handler-v10",
+		"sf-ax-request-handler-v10",
+		"sf-ax-response-error-handler-v10",
+		"sf-verify-jwt-hybrid-v1",
+		"sf-error-handler-jbh-v1",
+		"sf-logging-hybrid-v1"
+	],
+	"rest_to_soap_template": [
+		"sf-ax-response-handler-v2",
+		"sf-ax-request-handler-v2",
+		"sf-ax-response-error-handler-v1",
+		"sf-ax-request-error-handler-v1",
+		"sf-ax-postclient-flow-v2",
+		"sf-ax-log-collector-v1"
+	]
+}

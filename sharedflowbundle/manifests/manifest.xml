@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Manifest name="manifest">
+    <Policies>
+        <VersionInfo resourceName="AM.assign-uuid" version="SHA-512:472b6b2e9e749f0f2d6656bf5590c45c3f793df69045ae98b13cab40e72f1c43b7fd83f6fb7c41faf44d02ad507943ef002f26ce0d93aa3fdb92a02f89cceab5"/>
+        <VersionInfo resourceName="JS.create-uuid" version="SHA-512:13d6dbca015aee91936475b5a8cc3a3b9219ff72f4cb85c1bdbc920cd4ab54348ab0ff02d93d833c948d434584d8e0f5d81998ccaf0ab8426f017c3a96aad746"/>
+    </Policies>
+    <ProxyEndpoints/>
+    <Resources>
+        <VersionInfo resourceName="jsc://create-uuid.js" version="SHA-512:cab44c2dbff08a4b68f9c531cd3796ab443bc25dd1017cd161b9bf3eacbada998b663351949794100ec675576d3ade09c676e852f4f805a717391885a323b3b6"/>
+    </Resources>
+    <SharedFlows>
+        <VersionInfo resourceName="default" version="SHA-512:f2461fa2e7fe18c67df69894578d58aa7a455e98f513c22830786bd8d88c6ec33ed634dd1b98db48fb2398a6db749df42638fecc45bb2b275eb24438dd1e6ec8"/>
+    </SharedFlows>
+    <TargetEndpoints/>
+</Manifest>

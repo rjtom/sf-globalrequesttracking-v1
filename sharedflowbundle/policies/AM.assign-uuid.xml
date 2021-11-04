@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AM.assign-uuid">
+    <DisplayName>AM.assign-uuid</DisplayName>
+    <Properties/>
+    <AssignVariable>
+        <Name>guid</Name>
+        <Ref>request.header.x-trace-id</Ref>
+    </AssignVariable>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

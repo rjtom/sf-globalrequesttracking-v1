@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>apigee</groupId>
+	<artifactId>apickli-demo-v1</artifactId>
+	<version>1.0.0</version>
+	<name>apickli-demo-v1</name>
+	<packaging>pom</packaging>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<name>Maven Plugin Repository</name>
+			<url>https://repo1.maven.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<org.slf4j.simpleLogger.defaultLogLevel>info</org.slf4j.simpleLogger.defaultLogLevel>
+		<project.root.dir>${basedir}</project.root.dir>
+		<target.root.dir>${basedir}/target</target.root.dir>
+		<commit></commit>
+		<branch></branch>
+	</properties>
+
+	<!-- This is where you add the environment specific properties under various profile names -->
+	<!-- For apigee.options, refer to "Advanced Configuration Options" under https://github.com/apigee/apigee-deploy-maven-plugin#pom-xml-sample -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<apigee.profile>dev</apigee.profile>
+				<apigee.env>dev</apigee.env>
+				<apigee.hosturl>https://api.enterprise.apigee.com</apigee.hosturl>
+				<apigee.apiversion>v1</apigee.apiversion>
+				<apigee.org>${org}</apigee.org>
+				<apigee.username>${username}</apigee.username>
+				<apigee.password>${password}</apigee.password>
+				<apigee.options>${options}</apigee.options>
+				<api.northbound.domain>${apigeeNorthBoundDomain}</api.northbound.domain>
+				<api.testtag>~@wip</api.testtag>				<!-- Skips any Work In Progress tests -->
+				<!--apigee.tokenurl>${tokenUrl}</apigee.tokenurl-->				<!-- optional: optional and defaults to the cloud version "https://login.apigee.com/oauth/token" -->
+				<!--apigee.authtype>${authType}</apigee.authtype-->				<!-- optional: oauth|basic(default) -->
+				<apigeelint.sftemplate>${sfTemplate}</apigeelint.sftemplate>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<apigee.profile>test</apigee.profile>
+				<apigee.env>test</apigee.env>
+				<apigee.hosturl>https://api.enterprise.apigee.com</apigee.hosturl>
+				<apigee.apiversion>v1</apigee.apiversion>
+				<apigee.org>${org}</apigee.org>
+				<apigee.username>${username}</apigee.username>
+				<apigee.password>${password}</apigee.password>
+				<apigee.options>${options}</apigee.options>
+				<api.northbound.domain>${apigeeNorthBoundDomain}</api.northbound.domain>
+				<api.testtag>~@wip</api.testtag>				<!-- Skips any Work In Progress tests -->
+				<!--apigee.tokenurl>${tokenUrl}</apigee.tokenurl-->				<!-- optional: optional and defaults to the cloud version "https://login.apigee.com/oauth/token" -->
+				<!--apigee.authtype>${authType}</apigee.authtype-->				<!-- optional: oauth|basic(default) -->
+				<apigeelint.sftemplate>${sfTemplate}</apigeelint.sftemplate>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<apigee.profile>prod</apigee.profile>
+				<apigee.env>prod</apigee.env>
+				<apigee.hosturl>https://api.enterprise.apigee.com</apigee.hosturl>
+				<apigee.apiversion>v1</apigee.apiversion>
+				<apigee.org>${org}</apigee.org>
+				<apigee.username>${username}</apigee.username>
+				<apigee.password>${password}</apigee.password>
+				<apigee.options>${options}</apigee.options>
+				<api.northbound.domain>${apigeeNorthBoundDomain}</api.northbound.domain>
+				<api.testtag>~@wip</api.testtag>				<!-- Skips any Work In Progress tests -->
+				<!--apigee.tokenurl>${tokenUrl}</apigee.tokenurl-->				<!-- optional: optional and defaults to the cloud version "https://login.apigee.com/oauth/token" -->
+				<!--apigee.authtype>${authType}</apigee.authtype-->				<!-- optional: oauth|basic(default) -->
+				<apigeelint.sftemplate>${sfTemplate}</apigeelint.sftemplate>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>io.apigee.build-tools.enterprise4g</groupId>
+					<artifactId>apigee-edge-maven-plugin</artifactId>
+					<version>1.1.7</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<!-- run jslint -->
+			<plugin>
+				<groupId>com.cj.jshintmojo</groupId>
+				<artifactId>jshint-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>jslint</id>
+						<phase>none</phase>
+						<goals>
+							<goal>lint</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<directories>
+						<directory>apiproxy/resources/jsc</directory>
+					</directories>
+					<reporter>jslint</reporter>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<!-- copy the full apiproxy folder to target folder -->
+					<execution>
+						<id>copy-resources</id>
+						<phase>none</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<overwrite>true</overwrite>
+							<resources>
+								<resource>
+									<!--source -->
+									<directory>${project.root.dir}</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>apiproxy/**</include>
+										<include>test/integration/**</include>
+									</includes>
+								</resource>
+							</resources>
+							<!--target -->
+							<outputDirectory>${target.root.dir}</outputDirectory>
+						</configuration>
+					</execution>
+					<!-- copy the apickli config file to target folder. This is used during integration testing for every environment -->
+					<execution>
+						<id>copy-apickli-config</id>
+						<phase>none</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<overwrite>true</overwrite>
+							<resources>
+								<resource>
+									<!--source -->
+									<directory>${project.root.dir}</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>test/integration/*.json</include>
+									</includes>
+								</resource>
+							</resources>
+							<!--target -->
+							<outputDirectory>${target.root.dir}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Replaces tokens based on the values being templated -->
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.2</version>
+				<executions>
+					<execution>
+						<id>replace-tokens</id>
+						<phase>none</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+						<configuration>
+							<basedir>${target.root.dir}</basedir>
+							<includes>
+								<include>apiproxy/proxies/default.xml</include>
+								<include>test/integration/test-config.json</include>
+								<include>apiproxy/apickli-demo-v1.xml</include>
+							</includes>
+							<replacements>
+							</replacements>
+						</configuration>
+					</execution>
+					<execution>
+						<id>replace-apigee-northbound-domain</id>
+						<phase>none</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+						<configuration>
+							<basedir>${target.root.dir}</basedir>
+							<includes>
+								<include>test/integration/test-config.json</include>
+							</includes>
+							<replacements>
+								<replacement>
+									<token>demo-test.apigee.net</token>
+									<value>${api.northbound.domain}</value>
+								</replacement>
+							</replacements>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>io.apigee.build-tools.enterprise4g</groupId>
+				<artifactId>apigee-edge-maven-plugin</artifactId>
+				<version>1.1.6</version>
+				<executions>
+					<!--configure bundle -->
+					<execution>
+						<id>configure-bundle-step</id>
+						<phase>none</phase>
+						<goals>
+							<goal>configure</goal>
+						</goals>
+					</execution>
+					<!--deploy bundle -->
+					<execution>
+						<id>deploy-bundle-step</id>
+						<phase>none</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.apigee.edge.config</groupId>
+				<artifactId>apigee-config-maven-plugin</artifactId>
+				<version>1.4.6</version>
+				<executions>
+					<execution>
+						<id>create-config-cache</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>caches</goal>
+						</goals>
+					</execution>
+					<!-- added KVM -->
+					<execution>
+                        <id>create-config-kvm</id>
+                        <phase>verify</phase>                        
+                        <goals>
+                            <goal>keyvaluemaps</goal>
+                        </goals>
+                    </execution>
+					<execution>
+						<id>create-config-resourcefiles</id>
+						<phase>install</phase>
+						<goals>
+							<goal>resourcefiles</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<executions>
+					<!-- npm install -->
+					<execution>
+						<id>npm-install</id>
+						<phase>none</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm</executable>
+							<commandlineArgs>
+								install
+							</commandlineArgs>
+						</configuration>
+					</execution>
+					<!-- run apigee lint -->
+					<execution>
+						<id>apigee-lint</id>
+						<phase>none</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<environmentVariables>
+                                <SF_TEMPLATE>
+                                    ${apigeelint.sftemplate}
+                                </SF_TEMPLATE>
+                            </environmentVariables>
+							<executable>./node_modules/apigeelint/cli.js</executable>
+							<commandlineArgs>
+								-x apigeelint-config -s sharedflowbundle/ -f table.js
+							</commandlineArgs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- cleaning dirs -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+
+				<executions>
+					<execution>
+						<id>auto-clean-init</id>
+						<phase>none</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+					<!--execution>
+						<id>auto-clean-install</id>
+						<phase>install</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution-->
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

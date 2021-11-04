@@ -1,0 +1,89 @@
+{
+    "version": "1.0",
+    "envConfig": {
+        "test": {
+            "targetServers": [
+                {
+                    "name": "test-target-server2",
+                    "host": "httpbin.org",
+                    "isEnabled": true,
+                    "port": 80
+                    
+                }
+            ]
+        },
+        "prod": {
+            "targetServers": [
+                {
+                    "name": "test-target-server2",
+                    "host": "httpbin.org",
+                    "isEnabled": true,
+                    "port": 80
+                }
+            ]
+        },
+
+        "dev": {
+            "targetServers": [
+                {
+                    "name": "test-target-server2",
+                    "host": "httpbin.org",
+                    "isEnabled": true,
+                    "port": 80
+                },
+                {
+                    "name": "test-target-server-additional2",
+                    "host": "mocktarget.apigee.net",
+                    "isEnabled": true,
+                    "port": 80
+                }
+            ],
+            "kvms": [
+                {
+                    "name": "sf-kvm-test",
+                    "encrypted": false,
+                    "entry": [
+                        {
+                            "name": "target_basepath",
+                            "value": "apickli-demo/v1"
+                        },
+                        {
+                            "name": "logging.log",
+                            "value": "true"
+                        },
+                        {
+                            "name": "additional_entry",
+                            "value": "false"
+                        },
+                        {
+                            "name": "logging.level",
+                            "value": "INFO"
+                        },
+                        {
+                            "name": "testing.level",
+                            "value": "DEBUG2"
+                        },
+                        {
+                            "name": "testing.level2",
+                            "value": "true"
+                        }
+                    ]
+                }
+            ],
+     
+            "caches": [
+                {
+                    "name": "sfechocache",
+                    "description": "echo cache",
+                    "expirySettings": {
+                        "timeoutInSec": {
+                            "value": "300"
+                        },
+                        "valuesNull": false
+                    }
+                }
+            ]
+        }
+    }
+}
+

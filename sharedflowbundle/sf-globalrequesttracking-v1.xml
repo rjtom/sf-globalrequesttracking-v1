@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlowBundle revision="4" name="sf-globalrequesttracking-v1">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1592085261137</CreatedAt>
+    <CreatedBy>karthikddllc1@gmail.com</CreatedBy>
+    <Description>Attaches a unique GUID to a HTTP Request Header</Description>
+    <DisplayName>sf-globalrequesttracking-v1</DisplayName>
+    <LastModifiedAt>1592085261137</LastModifiedAt>
+    <LastModifiedBy>karthikddllc1@gmail.com</LastModifiedBy>
+    <ManifestVersion>SHA-512:912c7040f38f3ae0dfb41e235d0b1de45dc9493cddedde29287710676aea2c35bccb1c3b556ff8f253ca2daa4676ccb9d45fe9bb97846e303831ddbece0878e0</ManifestVersion>
+    <Policies>
+        <Policy>AM.assign-uuid</Policy>
+        <Policy>JS.create-uuid</Policy>
+    </Policies>
+    <Resources>
+        <Resource>jsc://create-uuid.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <subType>SharedFlow</subType>
+    <SharedFlows>
+        <SharedFlow>default</SharedFlow>
+    </SharedFlows>
+</SharedFlowBundle>
